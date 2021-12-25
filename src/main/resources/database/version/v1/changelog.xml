@@ -8,4 +8,5 @@
 
     <include file="0000_INIT.xml" relativeToChangelogFile="true"/>
     <include file="0001_CREATE_TABLE_CATEGORY.xml" relativeToChangelogFile="true"/>
+    <include file="0002_CREATE_TABLE_PRODUCT.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

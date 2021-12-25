@@ -5,27 +5,20 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="Alim">
+    <changeSet id="2" author="Alim">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="category"/>
+                <tableExists tableName="product"/>
             </not>
         </preConditions>
-        <createTable tableName="category">
+        <createTable tableName="product">
             <column name="id" type="${uuid_type}">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="shop_name" type="varchar(250)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="main_category" type="varchar(350)"/>
-            <column name="category" type="varchar(350)"/>
-            <column name="sub_category" type="varchar(350)"/>
-            <column name="main_category_link" type="varchar(350)"/>
+            <column name="name" type="varchar(350)"/>
+            <column name="link" type="varchar(350)"/>
             <column name="category_link" type="varchar(350)"/>
-            <column name="sub_category_link" type="varchar(350)"/>
-
+            <column name="price" type="double"/>
             <column name="created_at" type="timestamp">
                 <constraints nullable="false"/>
             </column>
