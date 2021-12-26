@@ -10,6 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Entity with selling product
+ */
 @Entity
 @Getter
 @Setter

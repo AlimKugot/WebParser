@@ -10,6 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+
+/**
+ * Entity with categories of products
+ */
 @Entity
 @Getter
 @Setter
@@ -19,6 +23,9 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class CategoryEntity extends CreatedEntity {
 
+    /**
+     * Name of web-store (ex: www.mvideo.ru)
+     */
     @Column(name = "shop_name", nullable = false)
     private String shopName;
 

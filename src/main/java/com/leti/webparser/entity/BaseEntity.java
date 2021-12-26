@@ -10,7 +10,9 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.UUID;
 
-
+/**
+ * Holds logic to create ID for entities
+ */
 @MappedSuperclass
 @Setter
 @Getter
@@ -19,6 +21,9 @@ public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Unique foreign-key to create entity
+     */
     @Id
     @Column(name = "id", length = 36, nullable = false, unique = true, updatable = false)
     private String id = UUID.randomUUID().toString();
