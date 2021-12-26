@@ -28,6 +28,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static com.leti.webparser.util.BrowserUtil.isScrolledPage;
 import static com.leti.webparser.util.BrowserUtil.scrollDown;
 
 
@@ -58,6 +59,8 @@ public class MvideoParser {
 
     private final String XPATH_PRODUCT_TITLE_PATTERN = "//div[@class='product-title product-title--grid']/a";
     private final String XPATH_PRODUCT_PRICE_PATTERN = "//span[@class='price__main-value']";
+    private final String XPATH_PRODUCT_PAGES = "//mvid-pagination/ul/li/a[text()[contains(.,*)]]";
+    private final String XPATH_PRODUCT_END_OF_PAGE_FROM = "//div[@class='bottom-controls']";
 
     private final Stack<String> productCategoryLinks = new Stack<>();
 
@@ -160,18 +163,20 @@ public class MvideoParser {
         String subcategoryLink = productCategoryLinks.pop();
         try {
             int pageMaxNumber = 1;
+            String path = subcategoryLink;
 
-            // page
-            for (int page = 1; page <= pageMaxNumber;) {
-                String path = subcategoryLink + "&page=" + page;
+            for (int page = 1; page <= pageMaxNumber; ) {
                 driver.get(path);
+                do {
+                    scrollDown(driver, 30);
+                } while (!isScrolledPage(driver, 80));
 
-                // products
                 List<WebElement> titles = driver.findElements(By.xpath(XPATH_PRODUCT_TITLE_PATTERN));
                 List<WebElement> prices = driver.findElements(By.xpath(XPATH_PRODUCT_PRICE_PATTERN));
+
                 if (titles.size() != prices.size()) {
                     scrollDown(driver, 200);
-                    log.warn("Titles size '" + titles.size() + "' != prices size '" + "'");
+                    log.warn("Titles size '" + titles.size() + "' != prices size '" + prices.size() + "'");
                 } else {
                     for (int j = 0; j < titles.size(); j++) {
                         WebElement title = titles.get(j);
@@ -180,8 +185,9 @@ public class MvideoParser {
                         String productName = title.getText();
                         String productLink = title.getAttribute("href");
                         Double productPrice = parsePrice(price.getText());
-                        if (productPrice == null)
+                        if (productPrice == null) {
                             throw new ShopException("Cannot parse product price for " + productLink);
+                        }
                         if (!productRepository.existsByLinkAndPrice(productLink, productPrice)) {
                             ProductEntity product = ProductEntity.builder()
                                     .name(productName)
@@ -193,13 +199,13 @@ public class MvideoParser {
                         }
                     }
                 }
-                List<WebElement> pages = driver.findElements(By.xpath("//mvid-pagination/ul/li/a[text()[contains(.,*)]]"));
-                if (!pages.isEmpty()) {
-                    page++;
-                    pageMaxNumber = Integer.parseInt(pages.get(pages.size() - 1).getText());
-                } else {
-                    scrollDown(driver);
+                List<WebElement> pageCount = driver.findElements(By.xpath(XPATH_PRODUCT_PAGES));
+                if (!pageCount.isEmpty()) {
+                    pageMaxNumber = Integer.parseInt(pageCount.get(pageCount.size() - 1).getText());
                 }
+
+                page++;
+                path = subcategoryLink + "&page=" + page;
             }
         } catch (NoSuchElementException exception) {
             System.out.println(exception.getMessage());

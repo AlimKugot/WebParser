@@ -19,10 +19,18 @@ public class BrowserUtil {
         return driver;
     }
 
-    public static long getHeightOfPage(WebDriver driver) {
+
+    public static boolean isScrolledPage(WebDriver driver, int percentToScroll) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        long num = (long) js.executeScript("return window.innerHeight");
-        return num;
+        double docHeight = Double.parseDouble(String.valueOf(js.executeScript("return Math.max(\n" +
+                "  document.body.scrollHeight, document.documentElement.scrollHeight,\n" +
+                "  document.body.offsetHeight, document.documentElement.offsetHeight,\n" +
+                "  document.body.clientHeight, document.documentElement.clientHeight\n" +
+                ");")));
+//        double sum = Double.parseDouble(String.valueOf(js.executeScript("return $(window).scrollTop() + $(window).height()")));
+        double scrolledY = Double.parseDouble(String.valueOf(js.executeScript("return window.pageYOffset;")));
+        docHeight = (docHeight * percentToScroll) / 100;
+        return scrolledY >= docHeight;
     }
 
 
@@ -49,7 +57,11 @@ public class BrowserUtil {
 
     public static void scrollUp(WebDriver driver) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0, 450)");
+        js.executeScript("window.scrollBy(0, -450)");
     }
 
+    public static void scrollUp(WebDriver driver, int y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0, -" + y + ")");
+    }
 }
