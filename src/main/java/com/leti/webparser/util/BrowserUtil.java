@@ -27,8 +27,8 @@ public class BrowserUtil {
                 "  document.body.offsetHeight, document.documentElement.offsetHeight,\n" +
                 "  document.body.clientHeight, document.documentElement.clientHeight\n" +
                 ");")));
-//        double sum = Double.parseDouble(String.valueOf(js.executeScript("return $(window).scrollTop() + $(window).height()")));
-        double scrolledY = Double.parseDouble(String.valueOf(js.executeScript("return window.pageYOffset;")));
+        double scrolledY = Double.parseDouble(String.valueOf(js.executeScript("return $(window).scrollTop() + $(window).height()")));
+//        double scrolledY = Double.parseDouble(String.valueOf(js.executeScript("return window.pageYOffset;")));
         docHeight = (docHeight * percentToScroll) / 100;
         return scrolledY >= docHeight;
     }

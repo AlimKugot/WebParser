@@ -14,8 +14,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +33,6 @@ import static com.leti.webparser.util.BrowserUtil.scrollDown;
 @Component
 @Getter
 @RequiredArgsConstructor
-@EnableAsync
 @Log4j2
 public class MvideoParser {
 
@@ -66,12 +63,23 @@ public class MvideoParser {
 
 
     @PostConstruct
+    @Transactional
     void setUpBrowser() {
         driver = BrowserUtil.setUpFirefoxBrowser();
         wait = new WebDriverWait(driver, 5);
+        parseMainCategoryPage();
+        parseSubCategoryPage();
+
+        if (productCategoryLinks.isEmpty()) {
+            List<String> links = StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+                    .map(CategoryEntity::getSubCategoryLink)
+                    .filter(link -> !link.isEmpty())
+                    .collect(Collectors.toList());
+            productCategoryLinks.addAll(links);
+        }
+        parseProducts();
     }
 
-    @Async
     @Scheduled(cron = "0 12 * * * *")
     public void parseMainCategoryPage() {
         driver.get(MAIN_LINK);
@@ -112,9 +120,8 @@ public class MvideoParser {
         }
     }
 
-
     @Transactional
-//    @Scheduled(fixedDelay = 5_000L)
+    @Scheduled(fixedDelay = 5_000L)
     public void parseSubCategoryPage() {
         CategoryEntity categoryEntity = categoryRepository.findFirstBySubCategoryIsNull();
         if (categoryEntity == null || categoryEntity.getCategoryLink() == null) return;
@@ -145,7 +152,6 @@ public class MvideoParser {
                     }
                 }
             }
-
         }
         categoryRepository.deleteDistinctByIdAndSubCategoryIsNull(categoryEntity.getId());
     }
@@ -154,11 +160,8 @@ public class MvideoParser {
     @Scheduled(fixedDelay = 8_000L)
     void parseProducts() {
         if (productCategoryLinks.isEmpty()) {
-            List<String> links = StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
-                    .map(CategoryEntity::getSubCategoryLink)
-                    .filter(link -> !link.isEmpty())
-                    .collect(Collectors.toList());
-            productCategoryLinks.addAll(links);
+            log.info("Parsing is end successfully!");
+            onDestroy();
         }
         String subcategoryLink = productCategoryLinks.pop();
         try {
@@ -169,7 +172,7 @@ public class MvideoParser {
                 driver.get(path);
                 do {
                     scrollDown(driver, 30);
-                } while (!isScrolledPage(driver, 80));
+                } while (!isScrolledPage(driver, 95));
 
                 List<WebElement> titles = driver.findElements(By.xpath(XPATH_PRODUCT_TITLE_PATTERN));
                 List<WebElement> prices = driver.findElements(By.xpath(XPATH_PRODUCT_PRICE_PATTERN));
