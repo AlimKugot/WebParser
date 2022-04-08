@@ -83,7 +83,7 @@ public class MvideoParser {
     /**
      * Starts program
      */
-    @PostConstruct
+    //@PostConstruct
     void start() {
         driver = BrowserUtil.setUpFirefoxBrowser();
         wait = new WebDriverWait(driver, 5);
@@ -110,7 +110,7 @@ public class MvideoParser {
     /**
      * Parse links to categories from page with all categories in the web-site every day at 9 o'clock
      */
-    @Scheduled(cron = "0 9 * * * *")
+    //@Scheduled(cron = "0 9 * * * *")
     public void parseMainCategoryPage() {
         driver.get(MAIN_LINK);
         List<WebElement> mainCategories = driver.findElements(By.xpath("//h3/a"));
@@ -154,7 +154,7 @@ public class MvideoParser {
     /**
      *  Parse links with subcategories for products every day at 10 o'clock
      */
-    @Scheduled(cron = "0 10 * * * *")
+    //@Scheduled(cron = "0 10 * * * *")
     public void parseSubCategoryPage() {
         while (!categoryIsNotNullStack.isEmpty()) {
             CategoryEntity categoryEntity = categoryIsNotNullStack.pop();
