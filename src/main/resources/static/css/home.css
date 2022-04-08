@@ -1,10 +1,10 @@
 body {
-    background-color: black;
+    background-color: #06191D;
 }
 
 .card {
     border: none;
-    background: #eee
+    background: #eee;
 }
 
 .search {
@@ -47,7 +47,7 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
-    background-color: #536bf6;
+    background-color: #06191D;
     font-size: 10px;
     bottom: 30px;
     position: relative;
@@ -73,7 +73,7 @@ a:link {
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
     cursor: pointer;
-    transition: all 2s
+    transition: all 200ms
 }
 
 .card-inner:hover {
@@ -86,4 +86,8 @@ a:link {
 
 .mg-text {
     line-height: 14px
+}
+
+.greeting-text {
+    font-size: 24px;
 }
