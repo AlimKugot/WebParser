@@ -17,7 +17,7 @@
 
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>16</java.version>
         <liquibase.version>4.6.1</liquibase.version>
         <xstream.version>1.4.18</xstream.version>
         <jsoup.version>1.13.1</jsoup.version>
