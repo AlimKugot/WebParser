@@ -1,4 +1,4 @@
-package com.alim.website.controller;
+package com.alim.admin.controller;
 
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,6 @@ public class AdminController {
 
     @GetMapping
     public String getAdminHomePage() {
-        return "html/admin_panel.html";
+        return "html/admin_home.html";
     }
 }
