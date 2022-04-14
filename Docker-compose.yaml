@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    container_name: postgres
+    ports:
+      - 5432
+    environment:
+      POSTGRES_DB: webparser_docker
+      POSTGRES_USER: alim
+      POSTGRES_PASSWORD: 00962192
+#      PGDATA: /var/lib/postgresql/data/pgdata
+  web_app:
+    build: .
+    container_name: web_parser
+    restart: on-failure
+    ports:
+    - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/webparser_docker
+      - SPRING_DATASOURCE_USERNAME=alim
+      - SPRING_DATASOURCE_PASSWORD=00962192
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
