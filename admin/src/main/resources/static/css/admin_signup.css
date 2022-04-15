@@ -1,0 +1,20 @@
+body {
+    background-color: black;
+}
+
+.card {
+    border: none;
+    background: #eee
+}
+
+a:link {
+    text-decoration: none
+}
+
+.mg-text span {
+    font-size: 12px
+}
+
+.mg-text {
+    line-height: 14px
+}
