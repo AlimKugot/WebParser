@@ -18,7 +18,7 @@ public class AdminSignupController {
 
     @GetMapping
     public String getSignupPage() {
-        return "admin_signup.html";
+        return "admin_signup";
     }
 
 
