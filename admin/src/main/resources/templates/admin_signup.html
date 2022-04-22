@@ -26,7 +26,7 @@
                             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                                 <div class="card" style="border-radius: 15px;">
                                     <div class="card-body p-5">
-                                        <form method="post">
+                                        <form method="post" th:action="@{/admin/signup}" id="registerForm">
                                             <div class="form-outline mb-4">
                                                 <input type="text" id="name" name="name" class="form-control form-control-lg"/>
                                                 <label class="form-label" for="name">Your Name</label>
@@ -68,15 +68,5 @@
         </div>
     </div>
 </div>
-<footer>
-    Мои контактные данные:
-</footer>
-<!--
-todo: дописать горизонтальную single page страничку
-Спецификация не допускает использование на одной странице более одного тега <main>, если у них нет специального атрибута hidden.
-Этот атрибут добавляется HTML-элементу, например, в одностраничных приложениях (Single Page Application), чтобы менять содержимое страницы,
-делая видимым тот или иной <main> в разных состояниях приложения. Атрибут hidden указывает браузеру, что элемент не должен отображаться и использоваться в момент,
-когда отображается и используется содержимое другого <main>.
--->
 </body>
 </html>

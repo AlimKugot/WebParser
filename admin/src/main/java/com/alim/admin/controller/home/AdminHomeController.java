@@ -1,15 +1,14 @@
 package com.alim.admin.controller.home;
 
 
+import com.alim.admin.util.AdminUrl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
 public class AdminHomeController {
 
-    @GetMapping
+    @GetMapping(AdminUrl.ADMIN_HOME)
     public String getAdminHomePage() {
         return "/home/admin_home";
     }
