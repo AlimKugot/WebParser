@@ -13,10 +13,12 @@ public enum Permission {
     PRODUCTS_WRITE("products:write"),
     CATEGORIES_READ("categories:read"),
     CATEGORIES_WRITE("categories:write"),
-    PARSING_MODE_READ("parsing:read"),
-    PARSING_MODE_WRITE("parsing:write"),
+    PARSER_MODE_READ("parsing:read"),
+    PARSER_MODE_WRITE("parsing:write"),
     LOGS_READ("logs:read"),
-    LOGS_WRITE("logs:write");
+    LOGS_WRITE("logs:write"),
+    USERS_READ("users:read"),
+    USERS_WRITE("users:write");
 
     private final String permission;
 }

@@ -1,31 +1,30 @@
 package com.alim.admin.controller;
 
-import com.alim.admin.model.AdminEntity;
-import com.alim.admin.service.AdminService;
+import com.alim.admin.dto.request.UserRequestDto;
+import com.alim.admin.service.UserService;
+import com.alim.admin.util.AdminUrl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/sign_up")
+@RequestMapping(AdminUrl.ADMIN_SIGNUP)
 public class AdminSignupController {
 
-    private final AdminService adminService;
+    private final UserService userService;
 
     @GetMapping
     public String getSignupPage() {
-        return "admin_signup.html";
+        return "admin_signup";
     }
 
-
-    @ResponseBody
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String signUp(@RequestParam MultiValueMap<String, String> body) {
-        AdminEntity admin = adminService.save(body);
-        return admin.toString();
+    @PostMapping
+    public String signUp(UserRequestDto userRequestDto) {
+        userService.save(userRequestDto);
+        return "redirect:/admin";
     }
 }
