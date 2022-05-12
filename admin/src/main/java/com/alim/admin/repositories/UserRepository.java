@@ -5,5 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends CrudRepository<UserEntity, String> {
+public interface UserRepository extends CrudRepository<UserEntity, String> {
+
+    UserEntity findFirstByName(String name);
 }
