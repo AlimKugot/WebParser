@@ -9,7 +9,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.alim.admin.model.Permission.*;
+import static com.alim.admin.model.Permission.CATEGORIES_READ;
+import static com.alim.admin.model.Permission.CATEGORIES_WRITE;
+import static com.alim.admin.model.Permission.EMAILS_READ;
+import static com.alim.admin.model.Permission.EMAILS_WRITE;
+import static com.alim.admin.model.Permission.LOGS_READ;
+import static com.alim.admin.model.Permission.LOGS_WRITE;
+import static com.alim.admin.model.Permission.PARSER_MODE_READ;
+import static com.alim.admin.model.Permission.PARSER_MODE_WRITE;
+import static com.alim.admin.model.Permission.PRODUCTS_READ;
+import static com.alim.admin.model.Permission.PRODUCTS_WRITE;
+import static com.alim.admin.model.Permission.USERS_READ;
+import static com.alim.admin.model.Permission.USERS_WRITE;
 
 @Getter
 @AllArgsConstructor
@@ -54,7 +65,7 @@ public enum Role {
 
     public Set<GrantedAuthority> getGrantedAuthorities() {
         Set<GrantedAuthority> authorities = getPermissions().stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;
