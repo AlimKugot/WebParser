@@ -3,9 +3,6 @@ package com.alim.mailsender.dto.request;
 import lombok.Data;
 
 @Data
-public class EmailRequest {
-
-    private String id;
-    private String name;
+public class MailRequestDto {
     private String email;
 }
