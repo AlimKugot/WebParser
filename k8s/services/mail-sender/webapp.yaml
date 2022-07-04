@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-api-deployment
+  labels:
+    app: mail-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mail-api
+  template:
+    metadata:
+      labels:
+        app: mail-api
+    spec:
+      containers:
+        - name: mail-api
+          image: alimkugot/mail-sender:1.0.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 200m
+            requests:
+              memory: 128Mi
+              cpu: 50m
+          ports:
+            - containerPort: 8051
+          env:
+            - name: USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-mails-secret
+                  key: mongo-root-username
+            - name: USER_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-mails-secret
+                  key: mongo-root-password
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-mails-config
+                  key: database-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mail-api-service
+spec:
+  type: NodePort
+  selector:
+    app: mail-api
+  ports:
+    - protocol: TCP
+      port: 8051
+      targetPort: 8051
+      nodePort: 30100

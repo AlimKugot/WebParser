@@ -1,25 +1,12 @@
-target/
 !**/src/main/**/target/
 !**/src/test/**/target/
+/**/target/**
 
 # Maven
 .mvn/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-
-
-### VS Code ###
-.vscode/
