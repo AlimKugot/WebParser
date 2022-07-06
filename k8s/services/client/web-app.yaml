@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+  labels:
+    app: client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: mail-api
+          image: alimkugot/webparser-client:1.0.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 200m
+            requests:
+              memory: 128Mi
+              cpu: 50m
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SERVER_PORT
+              value: "8083"
+            - name: USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-client-secret
+                  key: postgres-root-username
+            - name: USER_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-client-secret
+                  key: postgres-root-password
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-client-config
+                  key: database-host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-client-config
+                  key: database-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  type: NodePort
+  selector:
+    app: client
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+      nodePort: 30101
