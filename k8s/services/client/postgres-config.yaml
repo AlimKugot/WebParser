@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-client-config
+data:
+  database-host: postgres-client-service
+  database-port: "5432"

@@ -1,15 +1,15 @@
-package com.alim.website.controller;
+package com.alim.client.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-public class RedirectController {
+@RequestMapping("/home")
+public class HomeController {
 
     @GetMapping
-    public String getDefaultPage() {
-        return "redirect:/home";
+    public String getHomePage() {
+        return "html/home.html";
     }
 }
