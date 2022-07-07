@@ -49,11 +49,9 @@ kind: Service
 metadata:
   name: mail-api-service
 spec:
-  type: NodePort
   selector:
     app: mail-api
   ports:
     - protocol: TCP
       port: 8051
       targetPort: 8051
-      nodePort: 30100
