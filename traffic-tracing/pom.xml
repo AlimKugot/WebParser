@@ -18,7 +18,7 @@
         <maven.compiler.target>16</maven.compiler.target>
         <spring.cloud.version>2021.0.3</spring.cloud.version>
         <zipkin.version>2.12.9</zipkin.version>
-        <spring.cloud.sleuth.zipkin.version>3.1.3</spring.cloud.sleuth.zipkin.version>
+        <spring.cloud.version>3.1.3</spring.cloud.version>
     </properties>
 
 
@@ -26,10 +26,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <version>${spring.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+            <version>${spring.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,6 +40,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${spring.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,6 +59,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
             </plugin>
         </plugins>
     </build>
