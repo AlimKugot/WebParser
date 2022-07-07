@@ -1,6 +1,6 @@
-package com.alim.website;
+package com.alim.client;
 
-import com.alim.website.controller.HomeController;
+import com.alim.client.controller.HomeController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

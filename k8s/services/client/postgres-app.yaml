@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-stateful
+  labels:
+    app: postgres_client
+spec:
+  serviceName: postgres-stateful
+  replicas: 2
+  selector:
+    matchLabels:
+      app: postgres_client
+  template:
+    metadata:
+      labels:
+        app: postgres_client
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: postgres-client
+          image: postgres:14.4-alpine
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: 250m
+              memory: 200Mi
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-client-secret
+                  key: postgres-root-username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-client-secret
+                  key: postgres-root-username
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-persistent-storage
+        annotations:
+          volume.beta.kubernetes.io/storage-class: "standard"
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 150Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-client-service
+spec:
+  clusterIP: None
+  selector:
+    app: postgres_client
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

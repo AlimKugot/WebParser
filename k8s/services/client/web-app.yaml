@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mail-api-deployment
+  name: client-deployment
   labels:
-    app: mail-api
+    app: client
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: mail-api
+      app: client
   template:
     metadata:
       labels:
-        app: mail-api
+        app: client
     spec:
       containers:
         - name: mail-api
-          image: alimkugot/mail-sender:1.0.0
+          image: alimkugot/webparser-client:1.0.0
           imagePullPolicy: Always
           resources:
             limits:
@@ -26,32 +26,39 @@ spec:
               memory: 128Mi
               cpu: 50m
           ports:
-            - containerPort: 8051
+            - containerPort: 8083
           env:
+            - name: SERVER_PORT
+              value: "8083"
             - name: USER_NAME
               valueFrom:
                 secretKeyRef:
-                  name: mongo-mails-secret
-                  key: mongo-root-username
+                  name: postgres-client-secret
+                  key: postgres-root-username
             - name: USER_PWD
               valueFrom:
                 secretKeyRef:
-                  name: mongo-mails-secret
-                  key: mongo-root-password
+                  name: postgres-client-secret
+                  key: postgres-root-password
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: mongo-mails-config
-                  key: database-url
+                  name: postgres-client-config
+                  key: database-host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-client-config
+                  key: database-port
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mail-api-service
+  name: client-service
 spec:
   selector:
-    app: mail-api
+    app: client
   ports:
     - protocol: TCP
-      port: 8051
-      targetPort: 8051
+      port: 8083
+      targetPort: 8083
