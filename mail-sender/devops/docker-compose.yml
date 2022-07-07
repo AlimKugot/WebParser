@@ -1,7 +1,0 @@
-version: "3.8"
-services:
-  api-server:
-    build: ../
-    container_name: mail-sender
-    ports:
-      - "8080:8080"
