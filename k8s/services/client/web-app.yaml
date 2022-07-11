@@ -25,6 +25,18 @@ spec:
             requests:
               memory: 128Mi
               cpu: 50m
+          livenessProbe:
+            httpGet:
+              path: /client/actuator/health/liveness
+              port: 8083
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /client/actuator/health/readiness
+              port: 8083
+            initialDelaySeconds: 3
+            periodSeconds: 3
           ports:
             - containerPort: 8083
           env:
