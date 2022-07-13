@@ -25,6 +25,12 @@ spec:
             requests:
               memory: 128Mi
               cpu: 50m
+          startupProbe:
+            httpGet:
+              path: /client/actuator/health/liveness
+              port: 8083
+            failureThreshold: 30
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /client/actuator/health/liveness
