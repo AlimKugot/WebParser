@@ -2,12 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>WebParser</artifactId>
+        <groupId>com.alim</groupId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <groupId>com.alim.parser</groupId>
     <artifactId>parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -16,12 +17,14 @@
     <description>Parser for the Russian web markets</description>
 
     <properties>
-        <java.version>16</java.version>
-        <liquibase.version>4.6.1</liquibase.version>
-        <xstream.version>1.4.18</xstream.version>
-        <jsoup.version>1.13.1</jsoup.version>
-        <selenuim.version>3.141.59</selenuim.version>
-        <webdrivermanager.version>5.0.3</webdrivermanager.version>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <main.class.path>com.alim.parser.ParserApplication</main.class.path>
+        <liquibase.version>4.11.0</liquibase.version>
+        <xstream.version>1.4.19</xstream.version>
+        <jsoup.version>1.14.3</jsoup.version>
+        <selenuim.version>4.2.1</selenuim.version>
+        <webdrivermanager.version>5.2.0</webdrivermanager.version>
     </properties>
 
     <dependencies>
@@ -86,17 +89,17 @@
     </dependencies>
 
     <build>
+        <finalName>
+            parsing-api
+        </finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <mainClass>${main.class.path}</mainClass>
+                    <classifier>repackage</classifier>
                 </configuration>
             </plugin>
         </plugins>

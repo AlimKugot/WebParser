@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: client-deployment
   labels:
-    app: client
+    app: parser
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: client
+      app: parser
   template:
     metadata:
       labels:
-        app: client
+        app: parser
     spec:
       containers:
         - name: mail-api
@@ -75,7 +75,7 @@ metadata:
   name: client-service
 spec:
   selector:
-    app: client
+    app: parser
   ports:
     - protocol: TCP
       port: 8083
