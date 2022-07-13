@@ -1,12 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: client-ingress
+  name: main-nginx-ingress
   annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+    - hosts:
+        - shops-check.ru
+    - secretName: tls-secret
   rules:
-    - host: shops-check.ru
+    - host: www.shops-check.ru
     - http:
         paths:
           - path: /

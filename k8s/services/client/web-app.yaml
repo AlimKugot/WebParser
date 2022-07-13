@@ -20,11 +20,29 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: 256Mi
-              cpu: 200m
+              memory: 550Mi
+              cpu: 500m
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 456Mi
+              cpu: 300m
+          startupProbe:
+            httpGet:
+              path: /client/actuator/health/liveness
+              port: 8083
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /client/actuator/health/liveness
+              port: 8083
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /client/actuator/health/readiness
+              port: 8083
+            initialDelaySeconds: 3
+            periodSeconds: 3
           ports:
             - containerPort: 8083
           env:
