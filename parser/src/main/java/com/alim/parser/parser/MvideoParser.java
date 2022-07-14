@@ -17,7 +17,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.time.Duration;
 import java.util.Arrays;
@@ -83,7 +82,7 @@ public class MvideoParser {
     /**
      * Starts program
      */
-    @PostConstruct
+//    @PostConstruct
     void start() {
         driver = BrowserUtil.setUpFirefoxBrowser();
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
