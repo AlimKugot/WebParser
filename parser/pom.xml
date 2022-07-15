@@ -21,6 +21,8 @@
         <maven.compiler.target>16</maven.compiler.target>
         <main.class.path>com.alim.parser.ParserApplication</main.class.path>
 
+        <spring.profile.tests>test</spring.profile.tests>
+
         <maven.failsafe.plugin.version>3.0.0-M7</maven.failsafe.plugin.version>
         <spring.data.redis.version>2.7.1</spring.data.redis.version>
         <xstream.version>1.4.19</xstream.version>
@@ -135,7 +137,7 @@
                                 <include>com.alim.parser.integration</include>
                             </includes>
                             <environmentVariables>
-                                <SPRING_ACTIVE_PROFILE>test</SPRING_ACTIVE_PROFILE>
+                                <SPRING_ACTIVE_PROFILE>${spring.profile.tests}</SPRING_ACTIVE_PROFILE>
                             </environmentVariables>
                         </configuration>
                     </plugin>
@@ -163,7 +165,7 @@
 
                     <environmentVariables>
                         <!--  Активировать окружение application-test при запуске тестов -->
-                        <SPRING_ACTIVE_PROFILE>test</SPRING_ACTIVE_PROFILE>
+                        <SPRING_ACTIVE_PROFILE>${spring.profile.tests}</SPRING_ACTIVE_PROFILE>
                     </environmentVariables>
                 </configuration>
             </plugin>

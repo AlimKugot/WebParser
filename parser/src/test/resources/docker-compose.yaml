@@ -1,7 +1,6 @@
 version: '3.3'
 services:
   postgres:
-    # Official Postgres image from DockerHub
     image: 'postgres:14.4-alpine'
     ports:
       - "5436:5432"
@@ -9,9 +8,9 @@ services:
       - app_net
 
     environment:
-      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
-      POSTGRES_PASSWORD: secret # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: test_parser # The PostgreSQL default database (automatically created at first launch)
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: test_parser
 
 networks:
   app_net:
