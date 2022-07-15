@@ -16,7 +16,7 @@
 
 Разворачиваю в Jenkins (до этого использовал buddy)
 
-![ci/cd image](https://ibb.co/bLznPqg)
+<a href="https://ibb.co/bLznPqg"><img src="https://i.ibb.co/CvhFzN5/cicd-new.jpg" alt="cicd-new" border="0" /></a>
 
 # Состояние микросервисов
 
