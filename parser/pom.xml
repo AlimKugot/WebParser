@@ -2,12 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>WebParser</artifactId>
+        <groupId>com.alim</groupId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <groupId>com.alim.parser</groupId>
     <artifactId>parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -16,19 +17,29 @@
     <description>Parser for the Russian web markets</description>
 
     <properties>
-        <java.version>16</java.version>
-        <liquibase.version>4.6.1</liquibase.version>
-        <xstream.version>1.4.18</xstream.version>
-        <jsoup.version>1.13.1</jsoup.version>
-        <selenuim.version>3.141.59</selenuim.version>
-        <webdrivermanager.version>5.0.3</webdrivermanager.version>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <main.class.path>com.alim.parser.ParserApplication</main.class.path>
+
+        <spring.profile.tests>test</spring.profile.tests>
+
+        <maven.failsafe.plugin.version>3.0.0-M7</maven.failsafe.plugin.version>
+        <spring.data.redis.version>2.7.1</spring.data.redis.version>
+        <xstream.version>1.4.19</xstream.version>
+        <jsoup.version>1.14.3</jsoup.version>
+        <selenuim.version>4.2.1</selenuim.version>
+        <webdrivermanager.version>5.2.0</webdrivermanager.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>${spring.data.redis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -48,7 +59,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
@@ -66,7 +76,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -85,18 +95,88 @@
         </dependency>
     </dependencies>
 
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+        </profile>
+
+        <!--
+               Интеграционные тесты тратят много времени.
+               Сделаем их отдельными для более гибкой настройки CI/CD
+               Чтоб стартовать интеграционные тесты, нужно прописать команду:
+               mvn clean verify -P manual-integration-test
+        -->
+        <profile>
+            <id>manual-integration-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe.plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>com.alim.parser.ParserApplicationTests</include>
+                                <include>com.alim.parser.integration</include>
+                            </includes>
+                            <environmentVariables>
+                                <SPRING_ACTIVE_PROFILE>${spring.profile.tests}</SPRING_ACTIVE_PROFILE>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
     <build>
+        <finalName>
+            parsing-api
+        </finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!--
+                           Интеграционные тесты тратят много времени.
+                           Они запускаются отдельной командой.
+                           @see manual-integration-test
+                    -->
+                    <excludedGroups>integration</excludedGroups>
+
+                    <environmentVariables>
+                        <!--  Активировать окружение application-test при запуске тестов -->
+                        <SPRING_ACTIVE_PROFILE>${spring.profile.tests}</SPRING_ACTIVE_PROFILE>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <mainClass>${main.class.path}</mainClass>
+                    <classifier>repackage</classifier>
                 </configuration>
             </plugin>
         </plugins>

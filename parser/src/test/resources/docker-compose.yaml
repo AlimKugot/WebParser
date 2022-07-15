@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  postgres:
+    image: 'postgres:14.4-alpine'
+    ports:
+      - "5436:5432"
+    networks:
+      - app_net
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: test_parser
+
+networks:
+  app_net:
+    driver: bridge
