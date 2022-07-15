@@ -28,7 +28,6 @@
         <module>mail-sender</module>
         <module>parser</module>
         <module>client</module>
-        <module>traffic-tracing</module>
     </modules>
 
     <dependencyManagement>
