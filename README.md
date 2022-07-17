@@ -10,6 +10,15 @@
 
 ***Язык и фреймы*** 🈯 : развёртывается на базе Spring Boot Framework на языке Java. (для браузера используется JS)
 
+# Состояние микросервисов
+
+|  Название   |                                                             Build                                                             | Code Coverage | SonarQube | 
+|:-----------:|:-----------------------------------------------------------------------------------------------------------------------------:|:-------------:|:---------:|
+|   client    | [![Build Status](http://51.250.69.170:8080/job/webparser-client/badge/icon)](http://51.250.69.170:8080/job/webparser-client/) |     empty     |   empty   |
+|    admin    |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
+|   parser    |                                                             empty                                                             |     empty     |   empty   |
+| mail-sender |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
+
 ## CI/CD
 
 Концептуальная модель того, как выглядит настройка ci/cd в моём приложении.
@@ -17,12 +26,3 @@
 Разворачиваю в Jenkins (до этого использовал buddy)
 
 <a href="https://ibb.co/bLznPqg"><img src="https://i.ibb.co/CvhFzN5/cicd-new.jpg" alt="cicd-new" border="0" /></a>
-
-# Состояние микросервисов
-
-|     Название      | Состояние | Code Coverage | SonarQube | 
-|:-----------------:|:---------:|:-------------:|:---------:|
-|      client       |   empty   |     empty     |   empty   |
-|       admin       |   empty   |     empty     |   empty   |
-|      parser       |   empty   |     empty     |   empty   |
-|    mail-sender    |   empty   |     empty     |   empty   |
