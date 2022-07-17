@@ -10,6 +10,8 @@
 
 ***Язык и фреймы*** 🈯 : развёртывается на базе Spring Boot Framework на языке Java. (для браузера используется JS)
 
+<br>
+
 # Состояние микросервисов
 
 |  Название   |                                                             Build                                                             | Code Coverage | SonarQube | 
@@ -18,6 +20,9 @@
 |    admin    |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
 |   parser    |                                                             empty                                                             |     empty     |   empty   |
 | mail-sender |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
+
+<br>
+<br>
 
 ## CI/CD
 
