@@ -14,12 +14,12 @@
 
 # Состояние микросервисов
 
-|  Название   |                                                             Build                                                             | Code Coverage | SonarQube | 
-|:-----------:|:-----------------------------------------------------------------------------------------------------------------------------:|:-------------:|:---------:|
-|   client    | [![Build Status](http://51.250.69.170:8080/job/webparser-client/badge/icon)](http://51.250.69.170:8080/job/webparser-client/) |     empty     |   empty   |
-|    admin    |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
-|   parser    |                                                             empty                                                             |     empty     |   empty   |
-| mail-sender |  [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)  |     empty     |   empty   |
+|  Название   |                                                                  Build                                                                  | Code Coverage | SonarQube | 
+|:-----------:|:---------------------------------------------------------------------------------------------------------------------------------------:|:-------------:|:---------:|
+|   client    |      [![Build Status](http://51.250.69.170:8080/job/webparser-client/badge/icon)](http://51.250.69.170:8080/job/webparser-client/)      |     empty     |   empty   |
+|    admin    |       [![Build Status](http://51.250.69.170:8080/job/webparser-admin/badge/icon)](http://51.250.69.170:8080/job/webparser-admin/)       |     empty     |   empty   |
+|   parser    |                                                                  empty                                                                  |     empty     |   empty   |
+| mail-sender | [![Build Status](http://51.250.69.170:8080/job/webparser-mail-sender/badge/icon)](http://51.250.69.170:8080/job/webparser-mail-sender/) |     empty     |   empty   |
 
 <br>
 <br>
