@@ -18,12 +18,12 @@ pipeline {
                 sh 'mvn -pl ${PROJECT_NAME} test'
             }
         }
-
-        stage('Maven build') {
-            steps {
-                sh 'mvn clean install -DskipTests -f ${PROJECT_NAME}/pom.xml spring-boot:repackage'
-            }
-        }
+//
+//        stage('Maven build') {
+//            steps {
+//                sh 'mvn clean install -DskipTests -f ${PROJECT_NAME}/pom.xml spring-boot:repackage'
+//            }
+//        }
 
         stage('Publish Test Coverage Report') {
             steps {
@@ -34,6 +34,7 @@ pipeline {
 //                          sourcePattern: 'src/main/java',
 //                          exclusionPattern: 'src/test*'
 //                    ])
+                    sh 'ls'
                     sh 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
                     sh 'chmod +x codecov'
                     sh './codecov -t ${TOKEN}'
