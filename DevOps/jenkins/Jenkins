@@ -2,6 +2,7 @@
 pipeline {
     agent any
     environment {
+            TOKEN = 'b2a35a7e-2e9f-4f77-87d9-e3fbd10ba8f9'
             PROJECT_VERSION = '1.0.0'
             DOCKERHUB_CREDENTIALS = credentials("dockerhub-cred-alimkugot")
             DOCKERHUB_HOST = 'alimkugot'
@@ -21,6 +22,22 @@ pipeline {
         stage('Maven build') {
             steps {
                 sh 'mvn clean install -DskipTests -f ${PROJECT_NAME}/pom.xml spring-boot:repackage'
+            }
+        }
+
+        stage('Publish Test Coverage Report') {
+            steps {
+                dir("${PROJECT_NAME}") {
+//                    step([$class: 'JacocoPublisher',
+//                          execPattern: '**/build/jacoco/*.exec',
+//                          classPattern: '**/build/classes',
+//                          sourcePattern: 'src/main/java',
+//                          exclusionPattern: 'src/test*'
+//                    ])
+                    sh 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
+                    sh 'chmod +x codecov'
+                    sh './codecov -t ${TOKEN}'
+                }
             }
         }
 
