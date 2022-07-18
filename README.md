@@ -46,9 +46,10 @@ Service Discovery и LoadBalancer-а.
 > Примечание*: Kubernetes должен разворачиваться хотя бы на трёх серверах (master и slave ноды), однако
 > в целях экономии я использовал костыли, чтоб развернуть его на одном VPS сервере.
 
+<br>
 
-<a href="https://ibb.co/2kkKsfc">
-    <img src="https://i.ibb.co/BCCsrST/image.jpg" alt="image" border="0">
+<a href="https://i.ibb.co/BCCsrST/image.jpg">
+    <img src="https://i.ibb.co/qmFs8d7/Smaller.jpg" alt="Архитектура" border="0">
 </a>
 
 ### CI/CD
@@ -58,6 +59,6 @@ Service Discovery и LoadBalancer-а.
 Более точно описано в Groovy
 скрипте [Jenkins](https://github.com/AlimKugot/WebParser/blob/DevOps/DevOps/jenkins/Jenkins)
 
-<a href="https://ibb.co/FwSHh9X">
+<a href="https://ibb.co/2kkKsfc">
     <img src="https://i.ibb.co/Snhf62c/Spring-boot-Kubernetes.jpg" alt="Spring-boot-Kubernetes" border="0">
 </a>
