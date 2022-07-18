@@ -7,34 +7,30 @@ pipeline {
             DOCKERHUB_CREDENTIALS = credentials("dockerhub-cred-alimkugot")
             DOCKERHUB_HOST = 'alimkugot'
     }
-// sfsaasdf
+
+
     tools {
         maven 'maven-installer-3.8.6'
     }
 
+
     stages {
+
+        stage('Maven build') {
+            steps {
+                sh 'mvn clean install -DskipTests -f ${PROJECT_NAME}/pom.xml spring-boot:repackage'
+            }
+        }
+
         stage('Maven test') {
             steps {
                 sh 'mvn -pl ${PROJECT_NAME} test'
             }
         }
-//
-//        stage('Maven build') {
-//            steps {
-//                sh 'mvn clean install -DskipTests -f ${PROJECT_NAME}/pom.xml spring-boot:repackage'
-//            }
-//        }
 
-        stage('Publish Test Coverage Report') {
+        stage('Send codecov report') {
             steps {
                 dir("${PROJECT_NAME}") {
-//                    step([$class: 'JacocoPublisher',
-//                          execPattern: '**/build/jacoco/*.exec',
-//                          classPattern: '**/build/classes',
-//                          sourcePattern: 'src/main/java',
-//                          exclusionPattern: 'src/test*'
-//                    ])
-                    sh 'ls'
                     sh 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
                     sh 'chmod +x codecov'
                     sh './codecov -t ${TOKEN}'
