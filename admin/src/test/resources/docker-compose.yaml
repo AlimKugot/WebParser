@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  postgres_admin_test:
+    image: 'postgres:14.4-alpine'
+    container_name: 'postgres-admin-test'
+    ports:
+      - "5437:5432"
+    networks:
+      - app_admin_net
+
+    environment:
+      POSTGRES_USER: alim
+      POSTGRES_PASSWORD: string_pass123
+      POSTGRES_DB: test_admin
+
+networks:
+  app_admin_net:
+    driver: bridge
