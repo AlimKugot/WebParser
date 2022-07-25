@@ -79,6 +79,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.dkanejs.maven.plugins</groupId>
+            <artifactId>docker-compose-maven-plugin</artifactId>
+            <version>${com.dkanejs.maven.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
