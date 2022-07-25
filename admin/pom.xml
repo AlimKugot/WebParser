@@ -19,6 +19,8 @@
         <java.version>16</java.version>
         <liquibase.version>4.9.1</liquibase.version>
         <guava.version>31.1-jre</guava.version>
+        <!--   to start docker-compose via maven: used for integration tests with database     -->
+        <com.dkanejs.maven.version>4.0.0</com.dkanejs.maven.version>
     </properties>
 
     <dependencies>
@@ -92,6 +94,37 @@
                 </configuration>
             </plugin>
 
+            <!--     Запустить базу данных через docker-compose перед тестами       -->
+            <plugin>
+                <groupId>com.dkanejs.maven.plugins</groupId>
+                <artifactId>docker-compose-maven-plugin</artifactId>
+                <version>${com.dkanejs.maven.version}</version>
+                <executions>
+                    <execution>
+                        <id>up</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>down</goal>
+                            <goal>up</goal>
+                        </goals>
+                        <configuration>
+                            <composeFile>${basedir}/src/test/resources/docker-compose.yaml</composeFile>
+                            <detachedMode>true</detachedMode>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>down</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>down</goal>
+                        </goals>
+                        <configuration>
+                            <composeFile>${basedir}/src/test/resources/docker-compose.yaml</composeFile>
+                            <removeVolumes>true</removeVolumes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
